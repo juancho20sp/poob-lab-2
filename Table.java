@@ -1,24 +1,24 @@
-import java.util.Arrays;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.HashSet;
-import javax.swing.JOptionPane;
-
-/**
- * @author ECI, 2021-1
- *
- */
-public class Table{
-
-
+    import java.util.Arrays;
+    import java.util.ArrayList;
+    import java.util.List;
+    import java.util.Set;
+    import java.util.HashSet;
+    import javax.swing.JOptionPane;
+    
+    /**
+    * @author ECI, 2021-1
+    *
+    */
+    public class Table{
+    
+    
     private String[] attributes;
     private ArrayList<String[]> tuples;
     /*
      * The tables must remain 
      * (i) with the attribute names in uppercase 
      * (ii) without repeating tuples*/
-
+    
     /**
      * Constructs a new, empty table, with the specified attribute names.
      * @param names, 
@@ -48,7 +48,7 @@ public class Table{
             this.tuples.add(tuple);           
         }
     }
-
+    
     
     /**
      * Method for getting the quantity of registers
@@ -89,7 +89,14 @@ public class Table{
     public boolean in(String tuple[]){        
         return this.tuples.contains(tuple);
     }    
-
+    
+    private List<String> getTableAttributesAsList(){
+        // Traemos los atributos de la tabla como una lista        
+        List<String> tableAttributes = Arrays.asList(this.attributes());
+        
+        return tableAttributes;
+    }
+    
     /*
      * Relational operations: proyection, seleccion, natural join, rename
      */
@@ -105,8 +112,8 @@ public class Table{
         // Volvemos el conjunto una lista para operar más fácilmente los datos
         List<String> attributeList = Arrays.asList(attributes);
         
-        // Traemos los atributos de la tabla como una lista        
-        List<String> tableAttributes = Arrays.asList(this.attributes());
+        // Traemos los atributos de la tabla como una lista
+        List<String> tableAttributes = this.getTableAttributesAsList();        
         
         // Declaramos el arreglo que tendrá las posiciones a proyectar
         int[] positions = new int[attributeList.size()];
@@ -156,7 +163,7 @@ public class Table{
         proyectedTable.insert(finalValues);
         
         //System.out.println("Proyected: " + proyectedTable.toString());      
-
+    
         return proyectedTable;
     }
     
@@ -169,8 +176,58 @@ public class Table{
      * @return A Table with all the registers that match attribute and value.
      */
     public Table selection(String attribute, String operation, String value){
-        return null;
-    }    
+        // Treamos la lista de atributos
+        List<String> attributeList = this.getTableAttributesAsList();
+                
+        //Conseguir el índice del atributo
+        int index = attributeList.indexOf(attribute.toUpperCase());
+        
+        // Creamos la nueva tabla con los valores
+        Table selectedTable = new Table(attributeList.toArray(new String[0]));
+        
+        // Creamos una lista para los nuevos valores
+        ArrayList<String[]> newValues = new ArrayList<>();
+        
+        // Switch de la operación
+        switch(operation){
+            case "<":
+                for(int i = 0; i < this.tuples.size(); i++){
+                    String[] tup = this.tuple(i);
+                    
+                    System.out.println("tup[index]: " + tup[index]);
+                    System.out.println("Value: " + value);
+                    
+                    if(Integer.parseInt(tup[index]) < Integer.parseInt(value)){
+                        newValues.add(tup);
+                    }
+                }
+                break;
+            case "<=":
+                break;
+            case ">":
+                break;
+            case ">=":
+                break;
+            case "=":
+                break;
+            case "!=":
+                break;  
+            default:
+                JOptionPane.showMessageDialog(null, "La opción ingresada no es válida");
+                break;
+            }
+            
+            // Pasamos los nuevos valores a un arreglo
+            String[][] finalValues = newValues.toArray(new String[0][0]);
+        
+            // Añadimos los valores a la nueva tabla
+            selectedTable.insert(finalValues);
+        
+            System.out.println("Selected: " + selectedTable.toString()); 
+            
+            // Verificar el valor
+            return selectedTable;
+        }    
  
     public Table naturalJoin(Table t){
         return null;

@@ -166,7 +166,7 @@ public class TableTest
      *  lower than the given value.
      */
     @Test
-    public void shouldSelecLowerValues(){
+    public void shouldSelectLowerValues(){
         // Definimos las columnas de las tablas
         // ID: String
         // NAME: String

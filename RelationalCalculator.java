@@ -5,6 +5,9 @@ import java.util.Stack;
  */
     
 public class RelationalCalculator{
+    // Se van agregando datos a la pila
+    // Cuando llega un operador opera los últimos dos elementos de la pila
+    // Aplica el operador y pone el resultado en la pila
 
     private Stack<Table> tables;
     //Consultar en el API Java la clase Stack

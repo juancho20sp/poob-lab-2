@@ -24,15 +24,18 @@ public class TableTest
  
     @Test    
     public void shouldPass(){
+        assertTrue(true);
     }
     
     @Test
     public void shouldFail(){
+        fail("JAJA la prueba falló");
     }
 
     @Test    
     public void shouldErr(){
-        
+        throw new NullPointerException();
+        //throw new AssertionError("¡Este es mi error!");
     }
     
     /**

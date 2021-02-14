@@ -124,8 +124,283 @@ public class TableTest
         assertEquals(result,example.toString()); 
     }
    
-    
+    /**
+     * Verify if the proyection is working good
+     * @result The table containing the proyection of the table
+     */
+    @Test
+    public void shouldProyectValues(){
+        // Definimos las columnas de las tablas
+        String[] attributes = {"first", "second", "third"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"first1", "second1", "third1"}, {"first2", "second2", "third2"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la proyección
+        String[] desiredAttr = {"first", "third"};
+        String[][] desiredReg = {{"first1", "third1"}, {"first2", "second2"}};
+        
+        // Creamos la tabla esperada
+        //Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        //newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(FIRST,THIRD)\n(first1,third1)\n(first2,third2)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, myTable.proyection(desiredAttr).toString());
+        
+    }
 
+    /**
+     * Verify if the selection is working good
+     * @result The table containing the registers where the values stored are
+     *  lower than the given value.
+     */
+    @Test
+    public void shouldSelecLowerValues(){
+        // Definimos las columnas de las tablas
+        // ID: String
+        // NAME: String
+        // GRADE: 0 <= (Int) String <= 50
+        String[] attributes = {"id", "name", "grade"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la selección (nota menor a 28)
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg = {{"0004", "javier", "25"}};
+        
+        // Creamos la tabla esperada
+        Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(ID,NAME,GRADE)\n(0004,javier,25)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, newTable.selection("GRADE", "<", "28").toString());
+    }
+    
+    /**
+     * Verify if the selection is working good
+     * @result The table containing the registers where the values stored are
+     *  lower or equal than the given value.
+     */
+    @Test
+    public void shouldSelecLowerEqualValues(){
+        // Definimos las columnas de las tablas
+        // ID: String
+        // NAME: String
+        // GRADE: 0 <= (Int) String <= 50
+        String[] attributes = {"id", "name", "grade"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la selección (nota menor a 28)
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg = {{"0002", "david", "28"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla esperada
+        Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(ID,NAME,GRADE)\n(0002,david,28)\n(0004,javier,25)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, newTable.selection("GRADE", "<=", "28").toString());
+    }
+    
+    /**
+     * Verify if the selection is working good
+     * @result The table containing the registers where the values stored are
+     *  greater than the given value.
+     */
+    @Test
+    public void shouldSelecGreaterValues(){
+        // Definimos las columnas de las tablas
+        // ID: String
+        // NAME: String
+        // GRADE: 0 <= (Int) String <= 50
+        String[] attributes = {"id", "name", "grade"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la selección (nota mayor a 28)
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg = {{"0001", "juan", "44"}, {"0003", "carlos", "44"}};
+        
+        // Creamos la tabla esperada
+        Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(ID,NAME,GRADE)\n(0001,juan,44)\n(0003,carlos,44)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, newTable.selection("GRADE", ">", "28").toString());
+    }
+    
+    /**
+     * Verify if the selection is working good
+     * @result The table containing the registers where the values stored are
+     *  lower or equal than the given value.
+     */
+    @Test
+    public void shouldSeleGreaterEqualValues(){
+        // Definimos las columnas de las tablas
+        // ID: String
+        // NAME: String
+        // GRADE: 0 <= (Int) String <= 50
+        String[] attributes = {"id", "name", "grade"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la selección (nota mayor o igual a 28)
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}};
+        
+        // Creamos la tabla esperada
+        Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(ID,NAME,GRADE)\n(0001,juan,44)\n(0002,david,28)\n(0003,carlos,44)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, newTable.selection("GRADE", ">=", "28").toString());
+    }
+    
+    /**
+     * Verify if the selection is working good
+     * @result The table containing the registers where the value is equal to the
+     * given value
+     */
+    @Test
+    public void shouldSelectEqualValues(){
+        // Definimos las columnas de las tablas
+        // ID: String
+        // NAME: String
+        // GRADE: 0 <= (Int) String <= 50
+        String[] attributes = {"id", "name", "grade"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la selección (nota igual a 44)
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg = {{"0001", "juan", "44"}, {"0003", "carlos", "44"}};
+        
+        // Creamos la tabla esperada
+        Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(ID,NAME,GRADE)\n(0001,juan,44)\n(0003,carlos,44)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, newTable.selection("GRADE", "=", "44").toString());
+    }
+    
+    /**
+     * Verify if the selection is working good
+     * @result The table containing the registers where the value is different to
+     * the given one
+     */
+    @Test
+    public void shouldSelectDifferentValues(){
+        // Definimos las columnas de las tablas
+        // ID: String
+        // NAME: String
+        // GRADE: 0 <= (Int) String <= 50
+        String[] attributes = {"id", "name", "grade"};
+        
+        // Definimos los registros
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla
+        Table myTable = new Table(attributes);
+        
+        // Poblamos la tabla
+        myTable.insert(tuples);
+        
+        // Verificamos la selección (nota diferente de 44)
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg = {{"0002", "david", "28"}, {"0004", "javier", "25"}};
+        
+        // Creamos la tabla esperada
+        Table newTable = new Table(desiredAttr);
+        
+        // Poblamos la tabla esperada
+        newTable.insert(desiredReg);
+        
+        // String esperado
+        String res = "(ID,NAME,GRADE)\n(0002,david,28)\n(0004,javier,25)\n";
+        
+        // Verificamos si son iguales
+        assertEquals(res, newTable.selection("GRADE", "!=", "44").toString());
+    }
+    
     /**
      * Tears down the test fixture.
      *

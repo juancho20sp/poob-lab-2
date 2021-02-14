@@ -65,6 +65,7 @@ public class RelationalCalculator{
     
     /**
      * Method for inserting tuples into the top table of the stack
+     * @params  tuples[][]  An array of arrays containing the registers needed to append to the table
      */
     public void insert(String[][] tuples){ 
         // Traemos la tabla que está en el "top" de la pila
@@ -73,6 +74,31 @@ public class RelationalCalculator{
         // Agregamos los nuevos valores
         myTable.insert(tuples);
     }  
+    
+    /**
+     * Method for proyecting the top table from the stack
+     * @param   attributes[] An array containing the columns to be displayed
+     * @return The proyection of the top table from the stack
+     */
+    public Table proyect(String[] attributes){
+        // Toma la tabla del top del stack
+        // Realiza la proyección de esta
+        return null;
+    }
+    
+    /**
+     * Method for selecting specific rows of the top table from the stack
+     * @param   attribute -> The attribute we want to check
+     * @param   operation -> The operation we want to apply (>,>=,<,<=,=,!=)
+     * @return The proyection of the top table from the stack
+     */
+    public Table select(String attribute, String operation, String value){
+        // Pasar el atributo a mayúsculas
+        
+        // Toma la tabla del top del stack
+        // Realiza la proyección de esta
+        return null;
+    }
     
     /*
     * set operation: 'u' (union), 'i' (intersection), 'd' (difference)

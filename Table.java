@@ -1,5 +1,9 @@
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.HashSet;
+import javax.swing.JOptionPane;
 
 /**
  * @author ECI, 2021-1
@@ -62,8 +66,19 @@ public class Table{
         return this.attributes;
     }
     
+    /**
+     * Method for getting the tuple in the "n" position of the AraryList.
+     * @return An array containing the n-th inserted tuple
+     */
     public String[] tuple(int n){
-        return null;
+        // Si el índice es mayor al tamaño de la lista, no existe
+        if(n >= this.tuples.size()){
+            JOptionPane.showMessageDialog(null, "El índice ingresado no es válido");
+            return null;
+        }
+        
+        //System.out.println("Tupla: " + Arrays.toString(this.tuples.get(n)));
+        return this.tuples.get(n);
     }    
     
     /**
@@ -78,12 +93,83 @@ public class Table{
     /*
      * Relational operations: proyection, seleccion, natural join, rename
      */
-    
+    /**
+     * Proyect the registers for the attributes passed as parameters
+     * @param   The array of attributes to be displayed.
+     * @return  A Table with the registers for the given attributes
+     */
     public Table proyection(String attributes[]){
-        return null;
+        // Volvemos los atributos un conjunto para evitar duplicados        
+        //Set<String> attributesSet = new HashSet<>(Arrays.asList(attributes));        
+        
+        // Volvemos el conjunto una lista para operar más fácilmente los datos
+        List<String> attributeList = Arrays.asList(attributes);
+        
+        // Traemos los atributos de la tabla como una lista        
+        List<String> tableAttributes = Arrays.asList(this.attributes());
+        
+        // Declaramos el arreglo que tendrá las posiciones a proyectar
+        int[] positions = new int[attributeList.size()];
+        int idx = 0;
+        
+        System.out.println("Table attributes: " + tableAttributes.toString());
+        
+        // Agregamos las posiciones al arreglo
+        for(String att : attributeList){
+            System.out.println(att);
+            positions[idx++] = tableAttributes.indexOf(att.toUpperCase());
+            
+        }
+        
+        System.out.println("Positions: " + Arrays.toString(positions));       
+        
+        
+        // Creamos la nueva tabla con los valores
+        Table proyectedTable = new Table(attributeList.toArray(new String[0]));
+        
+        // Creamos una lista para los nuevos valores
+        ArrayList<String[]> newValues = new ArrayList<>();
+        
+        // Preparamos los valores
+        for(int i = 0; i < this.tuples.size(); i++){
+            ArrayList<String> values = new ArrayList<>();
+            
+           for(int j = 0; j < attributes.length; j++){               
+               if(Arrays.toString(positions).contains(positions[j] + "")){
+                   values.add(this.tuple(i)[positions[j]]);
+                   
+                   
+               }
+           }
+           // Convertimos la lista en un arreglo y la guardamos en 'newValues'
+           String[] temp = values.toArray(new String[0]);
+           
+           // Guardamos el arreglo en la lista de nuevos valores
+           newValues.add(temp);
+           
+        }
+        
+        // Pasamos los nuevos valores a un arreglo
+        String[][] finalValues = newValues.toArray(new String[0][0]);
+        
+        // Añadimos los valores a la nueva tabla
+        proyectedTable.insert(finalValues);
+        
+        System.out.println("Proyected: " + proyectedTable.toString());       
+        
+        
+        return proyectedTable;
     }
-
-    public Table selection(String attribute, String value){
+    
+    
+    /**
+     * Returns a table which contains all the registers that match a certain attribute and value
+     * @param   attribute -> The name of the column we want to consult.
+     * @param   operation -> The operation we want to apply
+     * @param   value -> The value we want to match
+     * @return A Table with all the registers that match attribute and value.
+     */
+    public Table selection(String attribute, String operation, String value){
         return null;
     }    
  

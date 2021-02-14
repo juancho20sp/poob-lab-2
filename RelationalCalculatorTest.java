@@ -122,6 +122,71 @@ public class RelationalCalculatorTest
         assertEquals(expected, calculator.consult());
     }
     
+    /**
+     * Verify if a new register is correctly added to the table
+     * @result A new register is added to the table without any problem.
+     */
+    @Test    
+    public void shouldProyectTable(){        
+        // Creamos los atributos de la tabla
+        String[] attr = {"first", "second", "third"};
+        
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos la tabla
+        calculator.add(attr);
+        
+        // Agregamos los datos
+        String[][] tuples = {{"first1", "second1", "third1"}, {"first2", "second2", "third2"}};
+        
+        calculator.insert(tuples);
+        
+        // Verificamos la proyección
+        String[] desiredAttr = {"first", "third"};
+        String[][] desiredReg = {{"first1", "third1"}, {"first2", "second2"}};
+        
+        // Verificamos que la información recibida sea igual a la esperada
+        String expected =  "(FIRST,THIRD)\n(first1,third1)\n(first2,third1)\n";
+        
+        assertEquals(expected, calculator.proyect(desiredAttr).toString());      
+        
+    }
+    
+    
+    /**
+     * Verify if a new register is correctly added to the table
+     * @result A new register is added to the table without any problem.
+     */
+    @Test    
+    public void shouldSelectTable(){        
+        // Creamos los atributos de la tabla
+        String[] attr = {"id", "name", "grade"};
+        
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos la tabla
+        calculator.add(attr);
+        
+        // Agregamos los datos
+        String[][] tuples = {{"0001", "juan", "44"}, {"0002", "david", "28"},
+    {"0003", "carlos", "44"}, {"0004", "javier", "25"}};
+        
+        calculator.insert(tuples);
+        
+        // Verificamos la selección
+        String[] desiredAttr = {"id", "name", "grade"};
+        String[][] desiredReg =  {{"0002", "david", "28"}, {"0004", "javier", "25"}};
+        
+        // Verificamos que la información recibida sea igual a la esperada
+        String expected =  "(ID,NAME,GRADE)\n(0002,david,28)\n(0004,javier,25)\n";
+        
+        assertEquals(expected, calculator.select("GRADE", "!=", "44"));      
+        
+    }
+    
+    
     public void delete(){
     }    
  

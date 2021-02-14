@@ -94,12 +94,12 @@ public class RelationalCalculator{
      * @param   operation -> The operation we want to apply (>,>=,<,<=,=,!=)
      * @return The proyection of the top table from the stack
      */
-    public Table select(String attribute, String operation, String value){
-        // Pasar el atributo a mayúsculas
-        
+    public Table select(String attribute, String operation, String value){     
         // Toma la tabla del top del stack
-        // Realiza la proyección de esta
-        return null;
+        Table myTable = this.tables.peek();
+        
+        // Realiza la selección de esta
+        return myTable.selection(attribute.toUpperCase(), operation, value);
     }
     
     /*

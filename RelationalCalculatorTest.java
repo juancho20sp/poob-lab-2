@@ -182,7 +182,7 @@ public class RelationalCalculatorTest
         // Verificamos que la información recibida sea igual a la esperada
         String expected =  "(ID,NAME,GRADE)\n(0002,david,28)\n(0004,javier,25)\n";
         
-        assertEquals(expected, calculator.select("GRADE", "!=", "44"));      
+        assertEquals(expected, calculator.select("GRADE", "!=", "44").toString());      
         
     }
     

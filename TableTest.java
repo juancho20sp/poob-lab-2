@@ -21,17 +21,26 @@ public class TableTest
     public void setUp(){
         
     }
- 
+    
+    /**
+     * Mock test that just have to pass.
+     */
     @Test    
     public void shouldPass(){
         assertTrue(true);
     }
     
+    /**
+     * Mock test that should fail.
+     */
     @Test
     public void shouldFail(){
         fail("JAJA la prueba falló");
     }
-
+    
+    /**
+     * Mock test that should throw an error.
+     */
     @Test    
     public void shouldErr(){
         throw new NullPointerException();

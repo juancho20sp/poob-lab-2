@@ -194,23 +194,55 @@
                 for(int i = 0; i < this.tuples.size(); i++){
                     String[] tup = this.tuple(i);
                     
-                    System.out.println("tup[index]: " + tup[index]);
-                    System.out.println("Value: " + value);
-                    
                     if(Integer.parseInt(tup[index]) < Integer.parseInt(value)){
                         newValues.add(tup);
                     }
                 }
                 break;
             case "<=":
+                for(int i = 0; i < this.tuples.size(); i++){
+                    String[] tup = this.tuple(i);
+                    
+                    if(Integer.parseInt(tup[index]) <= Integer.parseInt(value)){
+                        newValues.add(tup);
+                    }
+                }
                 break;
             case ">":
+                for(int i = 0; i < this.tuples.size(); i++){
+                    String[] tup = this.tuple(i);
+                    
+                    if(Integer.parseInt(tup[index]) > Integer.parseInt(value)){
+                        newValues.add(tup);
+                    }
+                }
                 break;
             case ">=":
+                for(int i = 0; i < this.tuples.size(); i++){
+                    String[] tup = this.tuple(i);
+                    
+                    if(Integer.parseInt(tup[index]) >= Integer.parseInt(value)){
+                        newValues.add(tup);
+                    }
+                }
                 break;
             case "=":
+                for(int i = 0; i < this.tuples.size(); i++){
+                    String[] tup = this.tuple(i);
+                    
+                    if(Integer.parseInt(tup[index]) == Integer.parseInt(value)){
+                        newValues.add(tup);
+                    }
+                }
                 break;
             case "!=":
+                for(int i = 0; i < this.tuples.size(); i++){
+                    String[] tup = this.tuple(i);
+                    
+                    if(Integer.parseInt(tup[index]) != Integer.parseInt(value)){
+                        newValues.add(tup);
+                    }
+                }
                 break;  
             default:
                 JOptionPane.showMessageDialog(null, "La opción ingresada no es válida");

@@ -82,8 +82,10 @@ public class RelationalCalculator{
      */
     public Table proyect(String[] attributes){
         // Toma la tabla del top del stack
-        // Realiza la proyección de esta
-        return null;
+        Table myTable = this.tables.peek();
+        
+        // Realiza la proyección de esta       
+        return myTable.proyection(attributes);
     }
     
     /**

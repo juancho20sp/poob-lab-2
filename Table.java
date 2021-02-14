@@ -112,16 +112,16 @@ public class Table{
         int[] positions = new int[attributeList.size()];
         int idx = 0;
         
-        System.out.println("Table attributes: " + tableAttributes.toString());
+        //System.out.println("Table attributes: " + tableAttributes.toString());
         
         // Agregamos las posiciones al arreglo
         for(String att : attributeList){
-            System.out.println(att);
+            //System.out.println(att);
             positions[idx++] = tableAttributes.indexOf(att.toUpperCase());
             
         }
         
-        System.out.println("Positions: " + Arrays.toString(positions));       
+        //System.out.println("Positions: " + Arrays.toString(positions));       
         
         
         // Creamos la nueva tabla con los valores
@@ -155,9 +155,8 @@ public class Table{
         // Añadimos los valores a la nueva tabla
         proyectedTable.insert(finalValues);
         
-        System.out.println("Proyected: " + proyectedTable.toString());       
-        
-        
+        //System.out.println("Proyected: " + proyectedTable.toString());      
+
         return proyectedTable;
     }
     

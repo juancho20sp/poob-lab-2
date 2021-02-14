@@ -147,7 +147,7 @@ public class RelationalCalculatorTest
         String[][] desiredReg = {{"first1", "third1"}, {"first2", "second2"}};
         
         // Verificamos que la información recibida sea igual a la esperada
-        String expected =  "(FIRST,THIRD)\n(first1,third1)\n(first2,third1)\n";
+        String expected =  "(FIRST,THIRD)\n(first1,third1)\n(first2,third2)\n";
         
         assertEquals(expected, calculator.proyect(desiredAttr).toString());      
         

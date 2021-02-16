@@ -400,6 +400,16 @@ public class TableTest
         // Verificamos si son iguales
         assertEquals(res, newTable.selection("GRADE", "!=", "44").toString());
     }
+    @Test
+    public void shouldRename(){
+       String[] attributes = {"First", "Second"};
+        Table table = new Table(attributes);
+
+        String[] newAttributes = {"Thirt","Fourth"};
+        Table prove = new Table(newAttributes);
+
+        assertArrayEquals(prove.attributes(),table.rename(newAttributes).attributes());
+    }
     
     /**
      * Tears down the test fixture.

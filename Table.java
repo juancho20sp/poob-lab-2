@@ -262,12 +262,38 @@
         }    
  
     public Table naturalJoin(Table t){
+        ArrayList<String> commonAtributtes = new ArrayList<>();
+
+        //looking for equal attributes and adding to the ArrayList
+        for(String val: t.attributes){
+            if(this.getTableAttributesAsList().contains(val)){
+                commonAtributtes.add(val);
+            }
+        }
+        // Creamos una tabla con los atributos en común
+        Table newTable = new Table(commonAtributtes.toArray(new String[0]));
+
+        for(String[] val: this.tuples){
+
+        }
+        
+
+
         return null;
     }
 
-    
+    /**
+     * Renames attributes values from a Table
+     * @param newAttributes
+     * @return the new Table
+     */
     public Table rename(String [] newAttributes){
-        return null;
+        for(int i = 0; i<this.attributes.length;i++){
+            this.attributes[i] = newAttributes[i];
+        }
+        this.tuples.clear();
+
+        return this;
     }
     
     /*

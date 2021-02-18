@@ -8,7 +8,7 @@ import jdk.jfr.Timestamp;
 import java.util.Arrays;
 
 /**
- * @author   ECI
+ * @author   ECI, Juan David Murillo, Carlos Orduz
  * @version 2021-1
  */
 public class TableTest
@@ -403,9 +403,14 @@ public class TableTest
         // Verificamos si son iguales
         assertEquals(res, newTable.selection("GRADE", "!=", "44").toString());
     }
+    
+    /**
+     * Verify if the rename method is working good
+     * @result The table rename its attributes correctly
+     */
     @Test
     public void shouldRename(){
-       String[] attributes = {"First", "Second"};
+        String[] attributes = {"First", "Second"};
         Table table = new Table(attributes);
 
         String[] newAttributes = {"Third","Fourth"};
@@ -415,6 +420,12 @@ public class TableTest
         assertEquals(table.toString(),res);
 
     }
+    
+    /**
+     * Verify if the union method is working good
+     * @result The table containing the registers resulting from the union of two
+     * tables
+     */
     @Test
     public void shouldUnion(){
         String[] attributes1 = {"nombre","apellido1"};
@@ -432,6 +443,11 @@ public class TableTest
         assertEquals(table1.union(table2).toString(),answer);
 
     }
+    
+    /**
+     * Verify if the 'in' methof is working good
+     * @result True if the registers contain a given tuple, false otherwise
+     */
     @Test
     public void inTest(){
         String[] attributes1 = {"nombre","apellido1"};

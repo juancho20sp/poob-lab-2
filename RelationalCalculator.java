@@ -1,7 +1,7 @@
 import java.util.Stack;
 
 /** Calculator.java
- * @author ESCUELA 2021-1
+ * @author ESCUELA 2021-1, Juan David Murillo, Carlos Orduz
  */
     
 public class RelationalCalculator{

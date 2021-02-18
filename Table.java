@@ -7,7 +7,7 @@
     import java.math.*;
     
     /**
-    * @author ECI, 2021-1
+    * @author ECI, Juan David Murillo, Carlos Orduz 2021-1
     *
     */
     public class Table{
@@ -308,7 +308,13 @@
     
     /*
      * Set operators
-     * The two relations involved must be union-compatible—that is, the two relations must have the same set of attributes.
+     * The two relations involved must be union-compatible—that is, 
+     * the two relations must have the same set of attributes.
+     */
+    /**
+     * Returns the table resulting of the 'union' of two tables
+     * @param   t   The table we want to 'union' with
+     * @return  The table with the result of the union
      */
     public Table union(Table t){
         if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){

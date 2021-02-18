@@ -12,6 +12,7 @@ public class RelationalCalculator{
     // Todas las funciones se realizan sobre la ÚLTIMA tabla agregada al stack
     
     private Stack<Table> tables;
+    private boolean ok;
     //Consultar en el API Java la clase Stack
     
     /**
@@ -19,6 +20,7 @@ public class RelationalCalculator{
      */
     public RelationalCalculator(){
         this.tables = new Stack<Table>();
+        this.ok = false;
     }
 
     /**
@@ -57,7 +59,14 @@ public class RelationalCalculator{
      */
     public String consult(){
         //System.out.println(this.tables.peek().toString());
-        return this.tables.peek().toString();
+        if(!this.tables.isEmpty()){
+            this.ok = true;
+            return this.tables.peek().toString();
+        }
+        else{
+            this.ok = false;
+            return null;
+        }
     }
     
     public void delete(){
@@ -110,11 +119,22 @@ public class RelationalCalculator{
     * If the operation cannot be done, the stack is not modified.
     */
     public void calculate(char operator){
+        switch(operator){
+            case 'u':
+            case 'i':
+            case 'd':
+            case 'p':
+            case 's':
+            case 'j':
+            case 'r':
+            default:
+            break;
+        }
     }
     
     /*Indicates if the last action was successful*/
     public boolean ok(){
-        return false;
+        return this.ok;
     }
     
     /**

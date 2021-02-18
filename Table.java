@@ -4,6 +4,7 @@
     import java.util.Set;
     import java.util.HashSet;
     import javax.swing.JOptionPane;
+    import java.math.*;
     
     /**
     * @author ECI, 2021-1
@@ -86,8 +87,18 @@
      * @param A tuple containing all the data of a register.
      * @return True if the register is in the table, false otherwise.
      */
-    public boolean in(String tuple[]){        
-        return this.tuples.contains(tuple);
+    public boolean in(String tuple[]){     
+        boolean contain = false;
+        for(String[] tup : this.tuples){
+            if(tup.length == tuple.length){
+                for(int i=0; i<tup.length;i++){
+                    if(tup[i]==tuple[i]){
+                        contain = true;
+                    }
+                }
+            }
+        }
+        return contain; 
     }    
     
     private List<String> getTableAttributesAsList(){
@@ -261,13 +272,38 @@
             return selectedTable;
         }    
  
-    public Table naturalJoin(Table t){
+    public Table naturalJoin(Table t, String attribute){
+        boolean hasAtrributeCommon = false;
+        ArrayList<String> commonAtributtes = new ArrayList<>();
+
+        //looking for equal attributes and adding to the ArrayList
+        for(String val: t.attributes){
+            if(this.getTableAttributesAsList().contains(val)){
+                commonAtributtes.add(val);
+                hasAtrributeCommon = true;
+            }
+        }
+        if(hasAtrributeCommon){
+        // Creamos una tabla con los atributos en común
+            Table newTable = new Table(commonAtributtes.toArray(new String[0]));
+
+        }
+        
+
+
         return null;
     }
 
-    
+    /**
+     * Renames attributes values from a Table
+     * @param newAttributes
+     * @return the new Table
+     */
     public Table rename(String [] newAttributes){
-        return null;
+        for(int i = 0; i<this.attributes.length;i++){
+            this.attributes[i] = newAttributes[i];
+        }
+        return this;
     }
     
     /*
@@ -275,6 +311,23 @@
      * The two relations involved must be union-compatible—that is, the two relations must have the same set of attributes.
      */
     public Table union(Table t){
+        if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){
+            String[] newAttributes = t.attributes;
+            ArrayList<String[]> newValues = new ArrayList<>();
+
+            for(String[] tup: this.tuples){
+                newValues.add(tup);
+            }
+            for(String[] tup:t.tuples){
+                if(!this.in(tup)){
+                    newValues.add(tup);
+                }
+            }
+
+            Table newTable = new Table(newAttributes);
+            newTable.insert(newValues.toArray(new String[0][0]));
+            return newTable;
+        }
         return null;
     }
 
@@ -320,9 +373,9 @@
           // Eliminamos los espacios
           s = s.replace(" ", "");
           
-          System.out.println(s);
           
           return s;
     }
-
+   
+    
 }

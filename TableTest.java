@@ -2,6 +2,9 @@ import static org.junit.Assert.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import jdk.jfr.Timestamp;
+
 import java.util.Arrays;
 
 /**
@@ -400,7 +403,43 @@ public class TableTest
         // Verificamos si son iguales
         assertEquals(res, newTable.selection("GRADE", "!=", "44").toString());
     }
-    
+    @Test
+    public void shouldRename(){
+       String[] attributes = {"First", "Second"};
+        Table table = new Table(attributes);
+
+        String[] newAttributes = {"Third","Fourth"};
+        table.rename(newAttributes);
+        
+        String res = "(Third,Fourth)\n";
+        assertEquals(table.toString(),res);
+
+    }
+    @Test
+    public void shouldUnion(){
+        String[] attributes1 = {"nombre","apellido1"};
+        String[] attributes2 = {"nombre","apellido1"};
+        String[][] reg1 = {{"ANTONIO","PEREZ"},{"ANTONIO","GARCIA"},{"PEDRO","RUIZ"}};
+        String[][] reg2 = {{"JUAN","APARICIO"},{"ANTONIO","GARCIA"},{"LUIS","LOPEZ"}};
+
+        Table table1 = new Table(attributes1);
+        table1.insert(reg1);
+
+        Table table2 = new Table(attributes1);
+        table2.insert(reg2);
+        String answer = "(NOMBRE,APELLIDO1)\n(ANTONIO,PEREZ)\n(ANTONIO,GARCIA)\n(PEDRO,RUIZ)\n(JUAN,APARICIO)\n(LUIS,LOPEZ)\n";
+
+        assertEquals(table1.union(table2).toString(),answer);
+
+    }
+    @Test
+    public void inTest(){
+        String[] attributes1 = {"nombre","apellido1"};
+        String[][] reg1 = {{"ANTONIO","PEREZ"},{"ANTONIO","GARCIA"},{"PEDRO","RUIZ"}};
+
+        Table t1 = new Table(attributes1);
+        t1.insert(reg1);
+    }
     /**
      * Tears down the test fixture.
      *

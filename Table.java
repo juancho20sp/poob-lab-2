@@ -340,13 +340,39 @@
         }
         return null;
     }
-
-    public Table intersection(Table t){
-       return null;
-    }  
+    
     
     /**
-     * Method for getting de difference of two tables
+     * Method for getting the intersection of two tables
+     * @param   The table to get intersected by the actual one
+     * @return  The table resulting from the intersection
+     */
+    public Table intersection(Table t){
+        // Resultados que deberían quedar
+        ArrayList<String[]> newValues = new ArrayList<>();
+        
+        if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){
+            String[] newAttributes = t.attributes;
+            
+            for(String[] t1Values: this.tuples){
+                if (t.in(t1Values)){                    
+                    newValues.add(t1Values);
+                }
+            }
+            
+            Table newTable = new Table(newAttributes);
+            newTable.insert(newValues.toArray(new String[0][0]));
+            
+            System.out.println(newTable.toString());
+            return newTable;
+        }
+        
+        return null;
+    }  
+    
+    
+    /**
+     * Method for getting the difference of two tables
      * @param   The table to get substracted by the actual one
      * @return  The table resulting from the difference
      */
@@ -359,8 +385,7 @@
             String[] newAttributes = t.attributes;
             
             for(String[] t1Values: this.tuples){
-                if (!t.in(t1Values)){
-                    System.out.println("Adding: " + Arrays.toString(t1Values));
+                if (!t.in(t1Values)){                    
                     newValues.add(t1Values);
                 }
             }

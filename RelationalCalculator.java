@@ -146,6 +146,8 @@ public class RelationalCalculator{
                     break;
             case 'i':
             case 'd':
+                    // Llamamos a la función de diferencia
+                    this.difference();
             case 'p':
             case 's':
             case 'j':
@@ -232,7 +234,7 @@ public class RelationalCalculator{
             
             
         } else {
-           JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una unión");
+           JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una diferencia");
         } 
     }
     

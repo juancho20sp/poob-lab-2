@@ -186,10 +186,58 @@ public class RelationalCalculatorTest
         
     }
     
-    
-    public void delete(){
+    /**
+     * Verify if the last table is deleted
+     * @result A Stack of tables without the top element
+     */
+    @Test
+    public void shouldDelete(){
+        // Creamos la calculadora
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Agregamos varias tablas
+        String[] attr = {"first", "second"};
+        calculator.add(attr);
+        
+        String[] attr2 = {"third", "fourth"};
+        calculator.add(attr2);
+        
+        String[] attr3 = {"fifth", "sixth"};
+        calculator.add(attr3);
+        
+        // Al eliminar una tabla, el tamaño se reduce en uno
+        int expected = calculator.getStackSize() - 1;
+        
+        // Eliminamos la tabla del top del stack
+        calculator.delete();
+        
+        assertEquals(expected, calculator.getStackSize());
+        
     }    
  
+    /**
+     * Verify if the attributes of the last table were changed correctly
+     * @result If the arttributes were correctly changed
+     */
+    @Test
+    public void shouldRenameTable(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Añadimos los atributos
+        String[] attr = {"first", "second"};
+        calculator.add(attr);
+        
+        // Renombramos los atributos
+        String[] newAttr = {"second", "first"};
+        calculator.renameTable(newAttr);
+        
+        // Verificamos cambios
+        String expected =  "(SECOND,FIRST)\n";
+        
+        assertEquals(expected, calculator.consult());        
+        
+    }
  
     /**
      * Tears down the test fixture.

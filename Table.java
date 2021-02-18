@@ -301,7 +301,7 @@
      */
     public Table rename(String [] newAttributes){
         for(int i = 0; i<this.attributes.length;i++){
-            this.attributes[i] = newAttributes[i];
+            this.attributes[i] = newAttributes[i].toUpperCase();
         }
         return this;
     }

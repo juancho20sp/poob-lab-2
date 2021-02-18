@@ -1,5 +1,5 @@
 import java.util.Stack;
-
+import javax.swing.JOptionPane;
 /** Calculator.java
  * @author ESCUELA 2021-1, Juan David Murillo, Carlos Orduz
  */
@@ -69,7 +69,26 @@ public class RelationalCalculator{
         }
     }
     
+    
+    /**
+     * Method for deleting the table at the top of the stack
+     */
+    
     public void delete(){
+        int prevLength = this.getStackSize();
+        
+        // Eliminamos la tabla
+        if (this.getStackSize() > 0){
+            this.tables.pop();
+        } else {
+            JOptionPane.showMessageDialog(null, "El stack está vacío, no puede eliminar más elementos");
+            this.ok = false;
+        }
+        
+        
+        if (this.getStackSize() == prevLength - 1){
+            this.ok = true;
+        }        
     }
     
     /**
@@ -111,7 +130,7 @@ public class RelationalCalculator{
         return myTable.selection(attribute.toUpperCase(), operation, value);
     }
     
-    /*
+    /**
     * set operation: 'u' (union), 'i' (intersection), 'd' (difference)
     * relational operation:  'p' (projection), 's' (selection), 'j' (natural join) , 'r' (rename)
     * To project and rename, the attributes are at the top of the stack.
@@ -132,7 +151,43 @@ public class RelationalCalculator{
         }
     }
     
+    /**
+     * Method for renaming the attributes of a table
+     * @param newAttributes     A string array with the new names for the attributes
+     * @return  The table with the new attributes
+     */
+    public Table renameTable(String[] newAttributes) {
+        // Tomamos la última tabla
+        Table myTable = this.tables.peek();
+        
+        Table res = null;
+        
+        // Verificamos que la cantidad de atributos nuevos sea válida
+        if (myTable.attributes().length == newAttributes.length){
+            // Cambiamos los atributos
+            myTable.rename(newAttributes);
+            
+            // Validamos la acción
+            this.ok = true;
+            
+            // Preparamos la tabla para ser retornada
+            res = myTable;
+        } else {
+            JOptionPane.showMessageDialog(null, "La cantidad de atributos no es la adecuada. \n Requeridos: " + myTable.attributes().length
+                                            + "\nEnviados: " + newAttributes.length);
+            this.ok = false;
+        }
+        
+        // Devolvemos el resultado
+        return res;
+    }
+    
+    
     /*Indicates if the last action was successful*/
+    /**
+     * Indicates if the last action was successful or not
+     * @return True if the last action was successful, false otherwise
+     */
     public boolean ok(){
         return this.ok;
     }

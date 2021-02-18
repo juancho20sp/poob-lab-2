@@ -375,8 +375,6 @@
           
           s += ")\n";
           
-          //s = Arrays.toString(this.attributes) + "\n";
-          
           // Agregamos los registros
           for(int i = 0; i < this.tuples.size(); i++){
               s += "(";
@@ -388,16 +386,8 @@
                   }
                 }
               s += ")\n";
-              //s += Arrays.toString(this.tuples.get(i)) + "\n";
-          }
-          
-          // Cambiamos los corchetes por paréntesis
-          //s = s.replace('[', '(');
-          //s = s.replace(']', ')');
-          
-          // Eliminamos los espacios
-          //s = s.replace(" ", "");
-          
+              
+          }          
           
           return s;
     }

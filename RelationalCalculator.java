@@ -141,6 +141,9 @@ public class RelationalCalculator{
     public void calculate(char operator){
         switch(operator){
             case 'u':
+                    // Llamamos a la función de unión
+                    this.union();
+                    break;
             case 'i':
             case 'd':
             case 'p':

@@ -445,6 +445,34 @@ public class TableTest
     }
     
     /**
+     * Verify if the difference method is working
+     * @result Pass if the resulting table is correct
+     */
+    @Test
+    public void shouldDifference(){
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        String[][] reg2 = {{"0002", "David"},{"0003", "Carlos"}};
+        
+        Table t1 = new Table(attr);
+        t1.insert(reg1);
+        
+        Table t2 = new Table(attr);
+        t2.insert(reg2);
+        
+        // Hacemos la resta
+        Table res = t1.difference(t2);
+        
+        // Verificamos la respuesta
+        String expected = "(ID,NAME)\n(0001,Juan)\n";
+
+        assertEquals(expected, res.toString());
+        
+        
+    }
+    
+    /**
      * Verify if the 'in' methof is working good
      * @result True if the registers contain a given tuple, false otherwise
      */

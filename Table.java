@@ -101,6 +101,10 @@
         return contain; 
     }    
     
+    /**
+     * Method for getting the list of attributes of the table
+     * @return A List of strings containing the list of attributes
+     */
     private List<String> getTableAttributesAsList(){
         // Traemos los atributos de la tabla como una lista        
         List<String> tableAttributes = Arrays.asList(this.attributes());
@@ -341,8 +345,55 @@
        return null;
     }  
     
-    public Table difference(Table t){
-       return null;        
+    /**
+     * Method for getting de difference of two tables
+     * @param   The table to get substracted by the actual one
+     * @return  The table resulting from the difference
+     */
+    public Table difference(Table t){      
+        
+        // Resultados que deberían quedar
+        ArrayList<String[]> newValues = new ArrayList<>();
+        
+        if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){
+            String[] newAttributes = t.attributes;
+            
+            for(String[] t1Values: this.tuples){
+                if (!t.in(t1Values)){
+                    System.out.println("Adding: " + Arrays.toString(t1Values));
+                    newValues.add(t1Values);
+                }
+            }
+            
+            for(String[] t1Values : this.tuples){
+                for (int i = 0; i < t.getTuples().size(); i++){
+                    boolean equalRegister = true;
+                    
+                    // Verificamos que sean iguales componente a componente
+                    /*for (int j = 0; j < t1Values.length; j++){
+                        if (t1Values[j] == t.tuple(i)[j]){
+                            System.out.println("T1: " + t1Values[j] + " T2: " +  t.tuple(i)[j]);
+                            equalRegister &= true;
+                        } else {
+                            equalRegister &= false;
+                        }
+                    }
+                    
+                    // Si no son iguales componente a componente lo agregamos a la lista de valores
+                    if(!equalRegister){
+                        System.out.println("Adding: " + Arrays.toString(t1Values));
+                        newValues.add(t1Values);
+                    }*/
+                }
+            } 
+            
+            Table newTable = new Table(newAttributes);
+            newTable.insert(newValues.toArray(new String[0][0]));
+            
+            System.out.println(newTable.toString());
+            return newTable;
+        }
+        return null;      
     }
     
 
@@ -352,6 +403,14 @@
      */
     private boolean equals (Table t) {
         return false;
+    }
+    
+    /**
+     * Get the tuples of the table as a list
+     * @return  The list of tuples of the table
+     */
+    public ArrayList<String[]> getTuples() {
+        return this.tuples;
     }
 
  

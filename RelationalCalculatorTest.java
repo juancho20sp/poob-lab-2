@@ -268,6 +268,36 @@ public class RelationalCalculatorTest
         assertEquals(expected, calculator.consult());        
         
     }
+    
+    
+    /**
+     * Verify if the difference of two tables was done correctly
+     * @result A valid differnce of two tables appended to the Stack
+     */
+    @Test
+    public void shouldDifference(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        String[][] reg2 = {{"0002", "David"},{"0003", "Carlos"}};
+        
+        calculator.add(attr, reg1);
+        calculator.add(attr, reg2);
+        
+        // Calculamos la diferencia
+        calculator.difference();
+        
+        // Verificamos el resultado
+        String expected = "(ID,NAME)\n(0001,Juan)\n";
+        
+        assertEquals(expected, calculator.consult());
+        
+        
+    }
+    
  
     /**
      * Tears down the test fixture.

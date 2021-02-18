@@ -365,28 +365,6 @@
                 }
             }
             
-            for(String[] t1Values : this.tuples){
-                for (int i = 0; i < t.getTuples().size(); i++){
-                    boolean equalRegister = true;
-                    
-                    // Verificamos que sean iguales componente a componente
-                    /*for (int j = 0; j < t1Values.length; j++){
-                        if (t1Values[j] == t.tuple(i)[j]){
-                            System.out.println("T1: " + t1Values[j] + " T2: " +  t.tuple(i)[j]);
-                            equalRegister &= true;
-                        } else {
-                            equalRegister &= false;
-                        }
-                    }
-                    
-                    // Si no son iguales componente a componente lo agregamos a la lista de valores
-                    if(!equalRegister){
-                        System.out.println("Adding: " + Arrays.toString(t1Values));
-                        newValues.add(t1Values);
-                    }*/
-                }
-            } 
-            
             Table newTable = new Table(newAttributes);
             newTable.insert(newValues.toArray(new String[0][0]));
             

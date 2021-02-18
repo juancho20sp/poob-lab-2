@@ -214,6 +214,28 @@ public class RelationalCalculator{
         }        
     }
     
+    /**
+     * Method for getting the union of two tables.
+     */
+    public void difference(){
+        // Solo podemos hacer diferencia si hay dos o más tablas
+        if(this.getStackSize() > 1){
+            // Sacamos dos tablas del stack
+            Table firstTable = this.tables.pop();
+            Table secondTable = this.tables.pop();
+            
+            // Unimos las tablas
+            Table res = secondTable.difference(firstTable);
+            
+            // Agregamos la tabla resultante al stack
+            this.tables.push(res);                       
+            
+            
+        } else {
+           JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una unión");
+        } 
+    }
+    
     /*Indicates if the last action was successful*/
     /**
      * Indicates if the last action was successful or not

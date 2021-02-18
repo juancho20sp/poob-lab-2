@@ -196,6 +196,7 @@ public class RelationalCalculator{
     
     /**
      * Method for getting the union of two tables.
+     * Stack[-2] union Stack[-1]
      */
     public void union(){
         // Solo podemos hacer union si hay dos o más tablas
@@ -217,7 +218,8 @@ public class RelationalCalculator{
     }
     
     /**
-     * Method for getting the union of two tables.
+     * Method for getting the difference of two tables.
+     * Stack[-2] difference Stack[-1]
      */
     public void difference(){
         // Solo podemos hacer diferencia si hay dos o más tablas
@@ -235,6 +237,29 @@ public class RelationalCalculator{
             
         } else {
            JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una diferencia");
+        } 
+    }
+    
+    /**
+     * Method for getting the intersection of two tables.
+     * Stack[-2] intersection Stack[-1]
+     */
+    public void intersection(){
+        // Solo podemos hacer diferencia si hay dos o más tablas
+        if(this.getStackSize() > 1){
+            // Sacamos dos tablas del stack
+            Table firstTable = this.tables.pop();
+            Table secondTable = this.tables.pop();
+            
+            // Unimos las tablas
+            Table res = secondTable.intersection(firstTable);
+            
+            // Agregamos la tabla resultante al stack
+            this.tables.push(res);                       
+            
+            
+        } else {
+           JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una intersección");
         } 
     }
     

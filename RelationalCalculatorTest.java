@@ -217,7 +217,7 @@ public class RelationalCalculatorTest
  
     /**
      * Verify if the attributes of the last table were changed correctly
-     * @result If the arttributes were correctly changed
+     * @result If the attributes were correctly changed
      */
     @Test
     public void shouldRenameTable(){
@@ -235,6 +235,36 @@ public class RelationalCalculatorTest
         // Verificamos cambios
         String expected =  "(SECOND,FIRST)\n";
         
+        assertEquals(expected, calculator.consult());        
+        
+    }
+    
+    /**
+     * Verify if the union of two tables was done correctly
+     * @result A valid union of two tables appended to the Stack
+     */
+    @Test
+    public void shouldUnionTables(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg = {{"0001", "Juan David"}, {"0002", "Carlos Javier"}};
+        calculator.add(attr, reg);
+        
+        String[][] reg2 = {{"0003", "David Javier"}, {"0004", "Juan Carlos"}};
+        calculator.add(attr, reg2);
+        
+        // Unimos las tablas
+        calculator.union();
+        
+        
+        // Las dos tablas antiguas se sacan del stack y se agrega la nueva únicamente
+        assertEquals(1, calculator.getStackSize());
+        
+        // Verificamos la correctitud de la tabla
+        String expected ="(ID,NAME)\n(0001,Juan David)\n(0002,Carlos Javier)\n(0003,David Javier)\n(0004,Juan Carlos)\n";
         assertEquals(expected, calculator.consult());        
         
     }

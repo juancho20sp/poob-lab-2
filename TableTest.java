@@ -416,7 +416,7 @@ public class TableTest
         String[] newAttributes = {"Third","Fourth"};
         table.rename(newAttributes);
         
-        String res = "(Third,Fourth)\n";
+        String res = "(THIRD,FOURTH)\n";
         assertEquals(table.toString(),res);
 
     }
@@ -439,7 +439,7 @@ public class TableTest
         Table table2 = new Table(attributes1);
         table2.insert(reg2);
         String answer = "(NOMBRE,APELLIDO1)\n(ANTONIO,PEREZ)\n(ANTONIO,GARCIA)\n(PEDRO,RUIZ)\n(JUAN,APARICIO)\n(LUIS,LOPEZ)\n";
-
+        
         assertEquals(table1.union(table2).toString(),answer);
 
     }

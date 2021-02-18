@@ -1,5 +1,6 @@
 import java.util.Stack;
 import javax.swing.JOptionPane;
+import java.util.Arrays;
 /** Calculator.java
  * @author ESCUELA 2021-1, Juan David Murillo, Carlos Orduz
  */
@@ -146,6 +147,12 @@ public class RelationalCalculator{
             case 's':
             case 'j':
             case 'r':
+                    String res = JOptionPane.showInputDialog("Ingrese los nuevos valores separados por coma y sin espacios:");
+                    String[] myRes = res.split(",");
+                    
+                    // Renombramos los atributos
+                    this.renameTable(myRes);
+                    break;
             default:
             break;
         }
@@ -182,6 +189,27 @@ public class RelationalCalculator{
         return res;
     }
     
+    /**
+     * Method for getting the union of two tables.
+     */
+    public void union(){
+        // Solo podemos hacer union si hay dos o más tablas
+        if(this.getStackSize() > 1){
+            // Sacamos dos tablas del stack
+            Table firstTable = this.tables.pop();
+            Table secondTable = this.tables.pop();
+            
+            // Unimos las tablas
+            Table res = secondTable.union(firstTable);
+            
+            // Agregamos la tabla resultante al stack
+            this.tables.push(res);                       
+            
+            
+        } else {
+           JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una unión");
+        }        
+    }
     
     /*Indicates if the last action was successful*/
     /**

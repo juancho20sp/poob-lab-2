@@ -266,7 +266,7 @@
             // Añadimos los valores a la nueva tabla
             selectedTable.insert(finalValues);
         
-            System.out.println("Selected: " + selectedTable.toString()); 
+           // System.out.println("Selected: " + selectedTable.toString()); 
             
             // Verificar el valor
             return selectedTable;
@@ -362,22 +362,41 @@
  
     @Override
     public String toString () {
-          String s = "";
+          String s = "(";
           
           // Agregamos los encabezados
-          s = Arrays.toString(this.attributes) + "\n";
+          for (int i = 0; i < this.attributes.length; i++){
+              if (i + 1 != this.attributes.length){
+                  s += this.attributes[i] + ",";
+              } else {
+                  s += this.attributes[i];
+              }
+          }
+          
+          s += ")\n";
+          
+          //s = Arrays.toString(this.attributes) + "\n";
           
           // Agregamos los registros
           for(int i = 0; i < this.tuples.size(); i++){
-              s += Arrays.toString(this.tuples.get(i)) + "\n";
+              s += "(";
+              for (int j = 0; j < this.tuples.get(i).length; j++){
+                  if (j + 1 != this.tuples.get(i).length){
+                      s += this.tuples.get(i)[j] + ",";
+                  } else {
+                      s += this.tuples.get(i)[j];
+                  }
+                }
+              s += ")\n";
+              //s += Arrays.toString(this.tuples.get(i)) + "\n";
           }
           
           // Cambiamos los corchetes por paréntesis
-          s = s.replace('[', '(');
-          s = s.replace(']', ')');
+          //s = s.replace('[', '(');
+          //s = s.replace(']', ')');
           
           // Eliminamos los espacios
-          s = s.replace(" ", "");
+          //s = s.replace(" ", "");
           
           
           return s;

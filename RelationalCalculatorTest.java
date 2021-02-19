@@ -328,6 +328,33 @@ public class RelationalCalculatorTest
     }
  
     /**
+     * Verify if the printAllTables method is working properly
+     * @return A String containing all the tables
+     */
+    @Test
+    public void shouldPrintAllTables(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr1 = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        calculator.add(attr1, reg1);
+        
+        String[] attr2 = {"University", "location"};
+        String[][] reg2 = {{"ECI", "Bogotá"},{"Los Andes", "Bogotá"},{"Javeriana", "Cali"}};
+        calculator.add(attr2, reg2);
+        
+        String[] attr3 = {"number"};
+        String[][] reg3 = {{"12"},{"22"},{"33"}};
+        calculator.add(attr3, reg3);
+        
+        // Verificamos el resultado
+        String expected = "(ID,NAME)\n(0001,Juan)\n(0002,David)\n(0003,Carlos)\n(UNIVERSITY,LOCATION)\n(ECI,Bogotá)\n(Los Andes,Bogotá)\n(Javeriana,Cali)\n(NUMBER)\n(12)\n(22)\n(33)\n";
+        assertEquals(expected, calculator.printAllTables());
+    }
+    
+    /**
      * Tears down the test fixture.
      *
      * Called after every test case method.

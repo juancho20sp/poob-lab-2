@@ -201,7 +201,8 @@ public class RelationalCalculator{
                     this.renameTable(myRes);
                     break;
             default:
-            break;
+                    JOptionPane.showMessageDialog(null, "El carater ingresado no es válido, inténtelo nuevamente");
+                    break;
         }
     }
     
@@ -303,6 +304,21 @@ public class RelationalCalculator{
         } else {
            JOptionPane.showMessageDialog(null, "No hay tablas suficientes para realizar una intersección");
         } 
+    }
+    
+    /**
+     * Method for printing all tables
+     * @return A string with all the tables
+     */
+    public String printAllTables(){
+        String res = "";
+        
+        for (int i = 0; i < this.tables.size(); i++){
+            res += this.tables.get(i).toString();
+        }
+        
+        System.out.println(res);
+        return res;
     }
     
     /*Indicates if the last action was successful*/

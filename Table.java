@@ -7,7 +7,7 @@
     import java.math.*;
     
     /**
-    * @author ECI, 2021-1
+    * @author ECI, Juan David Murillo, Carlos Orduz 2021-1
     *
     */
     public class Table{
@@ -101,6 +101,10 @@
         return contain; 
     }    
     
+    /**
+     * Method for getting the list of attributes of the table
+     * @return A List of strings containing the list of attributes
+     */
     private List<String> getTableAttributesAsList(){
         // Traemos los atributos de la tabla como una lista        
         List<String> tableAttributes = Arrays.asList(this.attributes());
@@ -118,7 +122,21 @@
      */
     public Table proyection(String attributes[]){
         // Volvemos los atributos un conjunto para evitar duplicados        
-        //Set<String> attributesSet = new HashSet<>(Arrays.asList(attributes));        
+        //Set<String> attributesSet = new HashSet<>(Arrays.asList(attributes)); 
+        
+        // Validamos los atributos
+        for(int i = 0; i < attributes.length; i++){
+            boolean isValid = false;
+            for (String attr : this.attributes()){                
+                if (attributes[i].toUpperCase().equals(attr)){
+                    isValid = true;
+                }
+            }
+            
+            if (!isValid){
+                return null;
+            }
+        }
         
         // Volvemos el conjunto una lista para operar más fácilmente los datos
         List<String> attributeList = Arrays.asList(attributes);
@@ -237,7 +255,7 @@
                     }
                 }
                 break;
-            case "=":
+            case "==":
                 for(int i = 0; i < this.tuples.size(); i++){
                     String[] tup = this.tuple(i);
                     
@@ -266,7 +284,7 @@
             // Añadimos los valores a la nueva tabla
             selectedTable.insert(finalValues);
         
-            System.out.println("Selected: " + selectedTable.toString()); 
+           // System.out.println("Selected: " + selectedTable.toString()); 
             
             // Verificar el valor
             return selectedTable;
@@ -301,14 +319,20 @@
      */
     public Table rename(String [] newAttributes){
         for(int i = 0; i<this.attributes.length;i++){
-            this.attributes[i] = newAttributes[i];
+            this.attributes[i] = newAttributes[i].toUpperCase();
         }
         return this;
     }
     
     /*
      * Set operators
-     * The two relations involved must be union-compatible—that is, the two relations must have the same set of attributes.
+     * The two relations involved must be union-compatible—that is, 
+     * the two relations must have the same set of attributes.
+     */
+    /**
+     * Returns the table resulting of the 'union' of two tables
+     * @param   t   The table we want to 'union' with
+     * @return  The table with the result of the union
      */
     public Table union(Table t){
         if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){
@@ -330,13 +354,63 @@
         }
         return null;
     }
-
+    
+    
+    /**
+     * Method for getting the intersection of two tables
+     * @param   The table to get intersected by the actual one
+     * @return  The table resulting from the intersection
+     */
     public Table intersection(Table t){
-       return null;
+        // Resultados que deberían quedar
+        ArrayList<String[]> newValues = new ArrayList<>();
+        
+        if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){
+            String[] newAttributes = t.attributes;
+            
+            for(String[] t1Values: this.tuples){
+                if (t.in(t1Values)){                    
+                    newValues.add(t1Values);
+                }
+            }
+            
+            Table newTable = new Table(newAttributes);
+            newTable.insert(newValues.toArray(new String[0][0]));
+            
+            System.out.println(newTable.toString());
+            return newTable;
+        }
+        
+        return null;
     }  
     
-    public Table difference(Table t){
-       return null;        
+    
+    /**
+     * Method for getting the difference of two tables
+     * @param   The table to get substracted by the actual one
+     * @return  The table resulting from the difference
+     */
+    public Table difference(Table t){      
+        
+        // Resultados que deberían quedar
+        ArrayList<String[]> newValues = new ArrayList<>();
+        
+        if(this.getTableAttributesAsList().containsAll(t.getTableAttributesAsList())){
+            String[] newAttributes = t.attributes;
+            
+            for(String[] t1Values: this.tuples){
+                if (!t.in(t1Values)){                    
+                    newValues.add(t1Values);
+                }
+            }
+            
+            Table newTable = new Table(newAttributes);
+            newTable.insert(newValues.toArray(new String[0][0]));
+            
+            System.out.println(newTable.toString());
+            return newTable;
+        }
+        return null;      
     }
     
 
@@ -347,6 +421,14 @@
     private boolean equals (Table t) {
         return false;
     }
+    
+    /**
+     * Get the tuples of the table as a list
+     * @return  The list of tuples of the table
+     */
+    public ArrayList<String[]> getTuples() {
+        return this.tuples;
+    }
 
  
     @Override
@@ -356,23 +438,32 @@
  
     @Override
     public String toString () {
-          String s = "";
+          String s = "(";
           
           // Agregamos los encabezados
-          s = Arrays.toString(this.attributes) + "\n";
+          for (int i = 0; i < this.attributes.length; i++){
+              if (i + 1 != this.attributes.length){
+                  s += this.attributes[i] + ",";
+              } else {
+                  s += this.attributes[i];
+              }
+          }
+          
+          s += ")\n";
           
           // Agregamos los registros
           for(int i = 0; i < this.tuples.size(); i++){
-              s += Arrays.toString(this.tuples.get(i)) + "\n";
-          }
-          
-          // Cambiamos los corchetes por paréntesis
-          s = s.replace('[', '(');
-          s = s.replace(']', ')');
-          
-          // Eliminamos los espacios
-          s = s.replace(" ", "");
-          
+              s += "(";
+              for (int j = 0; j < this.tuples.get(i).length; j++){
+                  if (j + 1 != this.tuples.get(i).length){
+                      s += this.tuples.get(i)[j] + ",";
+                  } else {
+                      s += this.tuples.get(i)[j];
+                  }
+                }
+              s += ")\n";
+              
+          }          
           
           return s;
     }

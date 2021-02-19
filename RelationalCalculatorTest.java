@@ -186,11 +186,174 @@ public class RelationalCalculatorTest
         
     }
     
-    
-    public void delete(){
+    /**
+     * Verify if the last table is deleted
+     * @result A Stack of tables without the top element
+     */
+    @Test
+    public void shouldDelete(){
+        // Creamos la calculadora
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Agregamos varias tablas
+        String[] attr = {"first", "second"};
+        calculator.add(attr);
+        
+        String[] attr2 = {"third", "fourth"};
+        calculator.add(attr2);
+        
+        String[] attr3 = {"fifth", "sixth"};
+        calculator.add(attr3);
+        
+        // Al eliminar una tabla, el tamaño se reduce en uno
+        int expected = calculator.getStackSize() - 1;
+        
+        // Eliminamos la tabla del top del stack
+        calculator.delete();
+        
+        assertEquals(expected, calculator.getStackSize());
+        
     }    
  
+    /**
+     * Verify if the attributes of the last table were changed correctly
+     * @result If the attributes were correctly changed
+     */
+    @Test
+    public void shouldRenameTable(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Añadimos los atributos
+        String[] attr = {"first", "second"};
+        calculator.add(attr);
+        
+        // Renombramos los atributos
+        String[] newAttr = {"second", "first"};
+        calculator.renameTable(newAttr);
+        
+        // Verificamos cambios
+        String expected =  "(SECOND,FIRST)\n";
+        
+        assertEquals(expected, calculator.consult());        
+        
+    }
+    
+    /**
+     * Verify if the union of two tables was done correctly
+     * @result A valid union of two tables appended to the Stack
+     */
+    @Test
+    public void shouldUnionTables(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg = {{"0001", "Juan David"}, {"0002", "Carlos Javier"}};
+        calculator.add(attr, reg);
+        
+        String[][] reg2 = {{"0003", "David Javier"}, {"0004", "Juan Carlos"}};
+        calculator.add(attr, reg2);
+        
+        // Unimos las tablas
+        calculator.union();
+        
+        
+        // Las dos tablas antiguas se sacan del stack y se agrega la nueva únicamente
+        assertEquals(1, calculator.getStackSize());
+        
+        // Verificamos la correctitud de la tabla
+        String expected ="(ID,NAME)\n(0001,Juan David)\n(0002,Carlos Javier)\n(0003,David Javier)\n(0004,Juan Carlos)\n";
+        assertEquals(expected, calculator.consult());        
+        
+    }
+    
+    
+    /**
+     * Verify if the difference of two tables was done correctly
+     * @result A valid difference of two tables appended to the Stack
+     */
+    @Test
+    public void shouldDifference(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        String[][] reg2 = {{"0002", "David"},{"0003", "Carlos"}};
+        
+        calculator.add(attr, reg1);
+        calculator.add(attr, reg2);
+        
+        // Calculamos la diferencia
+        calculator.difference();
+        
+        // Verificamos el resultado
+        String expected = "(ID,NAME)\n(0001,Juan)\n";
+        
+        assertEquals(expected, calculator.consult());
+        
+        
+    }
+    
+    
+    /**
+     * Verify if the intersection of two tables was done correctly
+     * @result A valid intersection of two tables appended to the Stack
+     */
+    @Test
+    public void shouldIntersection(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        String[][] reg2 = {{"0002", "David"},{"0003", "Carlos"}};
+        
+        calculator.add(attr, reg1);
+        calculator.add(attr, reg2);
+        
+        // Calculamos la diferencia
+        calculator.intersection();
+        
+        // Verificamos el resultado
+        String expected = "(ID,NAME)\n(0002,David)\n(0003,Carlos)\n";
+        
+        assertEquals(expected, calculator.consult());
+        
+        
+    }
  
+    /**
+     * Verify if the printAllTables method is working properly
+     * @return A String containing all the tables
+     */
+    @Test
+    public void shouldPrintAllTables(){
+        // Creamos la instancia de la clase
+        RelationalCalculator calculator = new RelationalCalculator();
+        
+        // Creamos las tablas
+        String[] attr1 = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        calculator.add(attr1, reg1);
+        
+        String[] attr2 = {"University", "location"};
+        String[][] reg2 = {{"ECI", "Bogotá"},{"Los Andes", "Bogotá"},{"Javeriana", "Cali"}};
+        calculator.add(attr2, reg2);
+        
+        String[] attr3 = {"number"};
+        String[][] reg3 = {{"12"},{"22"},{"33"}};
+        calculator.add(attr3, reg3);
+        
+        // Verificamos el resultado
+        String expected = "(ID,NAME)\n(0001,Juan)\n(0002,David)\n(0003,Carlos)\n(UNIVERSITY,LOCATION)\n(ECI,Bogotá)\n(Los Andes,Bogotá)\n(Javeriana,Cali)\n(NUMBER)\n(12)\n(22)\n(33)\n";
+        assertEquals(expected, calculator.printAllTables());
+    }
+    
     /**
      * Tears down the test fixture.
      *

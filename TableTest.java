@@ -8,7 +8,7 @@ import jdk.jfr.Timestamp;
 import java.util.Arrays;
 
 /**
- * @author   ECI
+ * @author   ECI, Juan David Murillo, Carlos Orduz
  * @version 2021-1
  */
 public class TableTest
@@ -361,7 +361,7 @@ public class TableTest
         String res = "(ID,NAME,GRADE)\n(0001,juan,44)\n(0003,carlos,44)\n";
         
         // Verificamos si son iguales
-        assertEquals(res, newTable.selection("GRADE", "=", "44").toString());
+        assertEquals(res, newTable.selection("GRADE", "==", "44").toString());
     }
     
     /**
@@ -403,18 +403,29 @@ public class TableTest
         // Verificamos si son iguales
         assertEquals(res, newTable.selection("GRADE", "!=", "44").toString());
     }
+    
+    /**
+     * Verify if the rename method is working good
+     * @result The table rename its attributes correctly
+     */
     @Test
     public void shouldRename(){
-       String[] attributes = {"First", "Second"};
+        String[] attributes = {"First", "Second"};
         Table table = new Table(attributes);
 
         String[] newAttributes = {"Third","Fourth"};
         table.rename(newAttributes);
         
-        String res = "(Third,Fourth)\n";
+        String res = "(THIRD,FOURTH)\n";
         assertEquals(table.toString(),res);
 
     }
+    
+    /**
+     * Verify if the union method is working good
+     * @result The table containing the registers resulting from the union of two
+     * tables
+     */
     @Test
     public void shouldUnion(){
         String[] attributes1 = {"nombre","apellido1"};
@@ -428,10 +439,71 @@ public class TableTest
         Table table2 = new Table(attributes1);
         table2.insert(reg2);
         String answer = "(NOMBRE,APELLIDO1)\n(ANTONIO,PEREZ)\n(ANTONIO,GARCIA)\n(PEDRO,RUIZ)\n(JUAN,APARICIO)\n(LUIS,LOPEZ)\n";
-
+        
         assertEquals(table1.union(table2).toString(),answer);
 
     }
+    
+    /**
+     * Verify if the difference method is working
+     * @result Pass if the resulting table is correct
+     */
+    @Test
+    public void shouldDifference(){
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        String[][] reg2 = {{"0002", "David"},{"0003", "Carlos"}};
+        
+        Table t1 = new Table(attr);
+        t1.insert(reg1);
+        
+        Table t2 = new Table(attr);
+        t2.insert(reg2);
+        
+        // Hacemos la resta
+        Table res = t1.difference(t2);
+        
+        // Verificamos la respuesta
+        String expected = "(ID,NAME)\n(0001,Juan)\n";
+
+        assertEquals(expected, res.toString());
+        
+        
+    }
+    
+    /**
+     * Verify if the intersection method is working
+     * @result Pass if the resulting table is correct
+     */
+    @Test
+    public void shouldIntersection(){
+        // Creamos las tablas
+        String[] attr = {"id", "name"};
+        String[][] reg1 = {{"0001", "Juan"},{"0002", "David"},{"0003", "Carlos"}};
+        String[][] reg2 = {{"0002", "David"},{"0003", "Carlos"}};
+        
+        Table t1 = new Table(attr);
+        t1.insert(reg1);
+        
+        Table t2 = new Table(attr);
+        t2.insert(reg2);
+        
+        // Hacemos la resta
+        Table res = t1.intersection(t2);
+        
+        // Verificamos la respuesta
+        String expected = "(ID,NAME)\n(0002,David)\n(0003,Carlos)\n";
+
+        assertEquals(expected, res.toString());
+        
+        
+    }
+    
+    /**
+     * Verify if the 'in' methof is working good
+     * @result True if the registers contain a given tuple, false otherwise
+     */
     @Test
     public void inTest(){
         String[] attributes1 = {"nombre","apellido1"};

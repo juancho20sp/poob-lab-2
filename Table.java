@@ -122,7 +122,21 @@
      */
     public Table proyection(String attributes[]){
         // Volvemos los atributos un conjunto para evitar duplicados        
-        //Set<String> attributesSet = new HashSet<>(Arrays.asList(attributes));        
+        //Set<String> attributesSet = new HashSet<>(Arrays.asList(attributes)); 
+        
+        // Validamos los atributos
+        for(int i = 0; i < attributes.length; i++){
+            boolean isValid = false;
+            for (String attr : this.attributes()){                
+                if (attributes[i].toUpperCase().equals(attr)){
+                    isValid = true;
+                }
+            }
+            
+            if (!isValid){
+                return null;
+            }
+        }
         
         // Volvemos el conjunto una lista para operar más fácilmente los datos
         List<String> attributeList = Arrays.asList(attributes);

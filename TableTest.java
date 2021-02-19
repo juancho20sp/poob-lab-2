@@ -361,7 +361,7 @@ public class TableTest
         String res = "(ID,NAME,GRADE)\n(0001,juan,44)\n(0003,carlos,44)\n";
         
         // Verificamos si son iguales
-        assertEquals(res, newTable.selection("GRADE", "=", "44").toString());
+        assertEquals(res, newTable.selection("GRADE", "==", "44").toString());
     }
     
     /**

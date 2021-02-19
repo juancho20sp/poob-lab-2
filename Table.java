@@ -255,7 +255,7 @@
                     }
                 }
                 break;
-            case "=":
+            case "==":
                 for(int i = 0; i < this.tuples.size(); i++){
                     String[] tup = this.tuple(i);
                     

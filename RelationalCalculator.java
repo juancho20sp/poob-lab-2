@@ -112,16 +112,13 @@ public class RelationalCalculator{
     public Table proyect(String[] attributes){
         // Toma la tabla del top del stack
         if(this.tables.size() > 0){
-            Table myTable = this.tables.peek();
-        
-        System.out.println(Arrays.toString(attributes));
-        
+            Table myTable = this.tables.peek();        
+                
         // Arreglamos los atributos
         for(int i = 0; i < attributes.length; i++){
             attributes[i] = attributes[i].toUpperCase();
         }
-        
-        System.out.println(Arrays.toString(attributes));
+               
         
         // Realiza la proyección de esta 
         System.out.println(myTable.proyection(attributes));
@@ -134,7 +131,7 @@ public class RelationalCalculator{
     /**
      * Method for selecting specific rows of the top table from the stack
      * @param   attribute -> The attribute we want to check
-     * @param   operation -> The operation we want to apply (>,>=,<,<=,=,!=)
+     * @param   operation -> The operation we want to apply (>,>=,<,<=,==,!=)
      * @param   value -> The value to evaluate
      * @return The proyection of the top table from the stack
      */
@@ -143,6 +140,7 @@ public class RelationalCalculator{
         Table myTable = this.tables.peek();
         
         // Realiza la selección de esta
+        System.out.println(myTable.selection(attribute.toUpperCase(), operation, value).toString());
         return myTable.selection(attribute.toUpperCase(), operation, value);
     }
     
@@ -172,25 +170,21 @@ public class RelationalCalculator{
                     String res = JOptionPane.showInputDialog("Ingrese los atributos a proyectar separados por coma y sin espacios:");
                     String[] splittedRes = res.split(",");
                     
-                    System.out.println(splittedRes);
-                    System.out.println(Arrays.toString(splittedRes));
-                    
-                    this.proyect(splittedRes);
-                    
                     
                     // Llamamos a la función de proyección
+                    this.proyect(splittedRes); 
                     
                     break;
                    
             case 's':
                     // Pedimos los datos necesarios al usuario
-                    String attribute = JOptionPane.showInputDialog("Ingrese el atributos que quiere seleccionar:");
+                    String attribute = JOptionPane.showInputDialog("Ingrese el atributo que quiere seleccionar:");
                     attribute = attribute.trim();
                     
-                    String operation = JOptionPane.showInputDialog("Ingrese la operación a realizar (>,>=,<,<=,=,!=):");
+                    String operation = JOptionPane.showInputDialog("Ingrese la operación a realizar (>,>=,<,<=,==,!=):");
                     operation = operation.trim();
                     
-                    String value = JOptionPane.showInputDialog("Ingrese el valor sobre el cual se va a evaluar la condiciónr:");
+                    String value = JOptionPane.showInputDialog("Ingrese el valor sobre el cual se va a evaluar la condición:");
                     value = value.trim();
                     
                     // Llamamos a la función de selección
